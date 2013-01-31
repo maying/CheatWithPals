@@ -1,0 +1,26 @@
+select {
+    border: 4px solid;
+    border-color: #EBB02C;
+    color: black;
+    background: #F3BF40;
+    font-weight: bold;
+    padding-left: 25px;
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: #DD7926 3px 3px inset;
+    -moz-border-radius: 30px;
+    -webkit-appearance: none;
+    border-radius: 20px;
+    vertical-align: top;
+}
+
+select:hover { background-color: #F7CF75; }
+
+input {
+    text-transform: uppercase;
+    font-size: 80px;
+    letter-spacing: 30px;
+}

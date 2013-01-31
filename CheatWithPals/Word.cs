@@ -16,6 +16,7 @@ namespace CheatWithPals
     {
         public int Id { get; set; }
         public string Word1 { get; set; }
+        public int Point { get; set; } // manually added
         public string Def { get; set; }
     }
 }

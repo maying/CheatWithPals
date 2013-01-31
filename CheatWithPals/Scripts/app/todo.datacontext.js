@@ -11,10 +11,35 @@ window.todoApp.datacontext = (function () {
         saveChangedTodoItem: saveChangedTodoItem,
         saveChangedTodoList: saveChangedTodoList,
         deleteTodoItem: deleteTodoItem,
-        deleteTodoList: deleteTodoList
+        deleteTodoList: deleteTodoList,
+        getWords: getWords
     };
 
     return datacontext;
+
+    function getWords(board, hand, wordListObservable) {
+        // todo - insert query builder lgoci
+        // var query = QueryBuilder(...);
+        var query = '';
+        var boardLetter = board; // remove all other space/bonus/wildcard
+        
+
+        return ajaxRequest("get", wordUrl() + '?boardLetter=' + boardLetter + '&letterOnHand=' + hand) // todo - add query to url
+            .done(getSucceeded)
+            .fail(getFailed);
+
+        function getSucceeded(data) {
+            wordListObservable.removeAll();
+            for (i = 0; i < data.length; i++) {
+                wordListObservable.push(data[i]);
+            }
+        }
+
+        function getFailed() {
+            alert('failed');
+            wordListObservable("Error retrieving words lists.");
+        }
+    }
 
     function getTodoLists(todoListsObservable, errorObservable) {
         return ajaxRequest("get", todoListUrl())
@@ -103,6 +128,7 @@ window.todoApp.datacontext = (function () {
         return $.ajax(url, options);
     }
     // routes
+    function wordUrl(id) { return "/api/word/" + (id || ""); }
     function todoListUrl(id) { return "/api/todolist/" + (id || ""); }
     function todoItemUrl(id) { return "/api/todo/" + (id || ""); }
 

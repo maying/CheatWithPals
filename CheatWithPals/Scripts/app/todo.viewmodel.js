@@ -27,15 +27,39 @@
             function deleteFailed() {
                 showTodoList(todoList); // re-show the restored list
             }
+        },
+        slotValues = [" ", "*", "{DL}", "{DW}", "{TL}", "{TW}", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+        slots = ko.observableArray([{ value: slotValues }]),
+        wordList = ko.observableArray([{ word: "abc", point: 0 }]),
+        doSomething = function (formElement) {
+            var length = formElement.elements.length;
+            var board = "";
+            var hand;
+            for (i = 0; i < length; i++) {
+                if (formElement[i].type == "select-one") {
+                    board += formElement[i].value;
+                } else if (formElement[i].type == "text") {
+                    hand = formElement[i].value;
+                }
+            }          
+            datacontext.getWords(board, hand, wordList);
+        },
+        addSlot = function () {
+            
+            slots.push({ value: slotValues });
         };
 
-    datacontext.getTodoLists(todoLists, error); // load todoLists
+    //datacontext.getTodoLists(todoLists, error); // load todoLists
 
     return {
         todoLists: todoLists,
         error: error,
         addTodoList: addTodoList,
-        deleteTodoList: deleteTodoList
+        deleteTodoList: deleteTodoList,
+        slots: slots,
+        addSlot: addSlot,
+        doSomething: doSomething,
+        wordList: wordList
     };
 
 })(ko, todoApp.datacontext);

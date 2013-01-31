@@ -82,6 +82,6 @@ C:\cheatwithpals\CheatWithPals\bin\ko\System.Spatial.resources.dll
 C:\cheatwithpals\CheatWithPals\bin\ru\System.Spatial.resources.dll
 C:\cheatwithpals\CheatWithPals\bin\zh-Hans\System.Spatial.resources.dll
 C:\cheatwithpals\CheatWithPals\bin\zh-Hant\System.Spatial.resources.dll
-C:\cheatwithpals\CheatWithPals\obj\Debug\CheatWithPals.csprojResolveAssemblyReference.cache
 C:\cheatwithpals\CheatWithPals\obj\Debug\CheatWithPals.dll
 C:\cheatwithpals\CheatWithPals\obj\Debug\CheatWithPals.pdb
+C:\cheatwithpals\CheatWithPals\obj\Debug\CheatWithPals.csprojResolveAssemblyReference.cache

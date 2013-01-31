@@ -1,76 +1,61 @@
-﻿@model CheatWithPals.Models.LoginModel
-@{
+﻿@{
     ViewBag.Title = "My Todo List";
-}
-@functions{
-    public string GetAntiForgeryToken()
-    {
-        string cookieToken, formToken;
-        AntiForgery.GetTokens(null, out cookieToken, out formToken);
-        return cookieToken + ":" + formToken;                
-    }
 }
 
 <header>
     <h1>@ViewBag.Title</h1>
+    <link href="~/selectExample.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+
+
+
+        function someMethod(sth) {
+            var dropdown = $("[name=" + sth.name + "]");
+            if (dropdown.val().length > 1) {
+
+                dropdown.css("font-size", "30px");
+                dropdown.css("padding-left", "10px");
+            } else {
+
+                dropdown.css("font-size", "50px");
+                dropdown.css("padding-left", "25px");
+            }
+        }
+    </script>
 </header>
 
 <div id="main-content">
-@if (@User.Identity.IsAuthenticated)
-{
-    <p class="error" data-bind="text: error"></p>
-    <input id="antiForgeryToken" type="hidden" value="@GetAntiForgeryToken()" />
-    <button data-bind="click: addTodoList">Add Todo list</button>
+    
+        <p class="error" data-bind="text: error"></p>
+        
+   
+        <button data-bind="click: addSlot">Add Slot</button>
+    
+        <form data-bind="submit: doSomething">
+            <div data-bind="foreach: slots" style="height:100px">
+                
+                    <select  data-bind="options: value, uniqueName: true" class="mainselection" onchange="javascript:someMethod(this);"></select>
+                
+            </div>
 
-    <section id="lists" data-bind="foreach: todoLists, visible: todoLists().length > 0">
-        <article class="todoList">
-            <header>
-                <form data-bind="validate: true">
-                    <input class="required" data-bind="value: title, selected: isEditingListTitle, blurOnEnter: true" />
-                </form>
-            </header>
-
-            <a href="#" class="deletelist" data-bind="click: $parent.deleteTodoList">X</a>
-
-            <ul data-bind="foreach: todos">
+            <input type="text" />
+            <br />
+            <button data-bind="">Let's Cheat!</button>
+        </form>
+        <div style="background-color: yellow" id="diff">
+            <ul data-bind="foreach: wordList">
                 <li>
-                    <input type="checkbox" data-bind="checked: isDone" />
-                    <input class="todoItemInput" type="text" data-bind="value: title, disable: isDone, blurOnEnter: true" />
-                    <a href="#" data-bind="click: $parent.deleteTodo">X</a>
-                    <p class="error" data-bind="visible: errorMessage, text: errorMessage"></p>
+                    <span data-bind="text: word"></span>
+                    <span data-bind="text: point"></span> pts
                 </li>
             </ul>
-
-            <form data-bind="submit: addTodo">
-                <input class="addTodo" type="text" data-bind="value: newTodoTitle, placeholder: 'Type here to add', blurOnEnter: true, event: { blur: addTodo }" />
-            </form>
-
-            <p class="error" data-bind="visible: errorMessage, text: errorMessage"></p>
-        </article>
-    </section>
-}
-else
-{
-    <div class="todoList" id="loginPanel">
-        <section id="localLoginPanel">
-            <h2>Log in</h2>
-            @Html.Partial("_Login")
-        </section>
-        <section id="socialLoginPanel">
-            <h2>Log in using another service</h2>
-            @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-        <p>First time here? <a id="showRegister">Sign up</a></p>
-    </div>
-    <div class="todoList" id="registerPanel">
-        <h2>Sign up</h2>
-        @Html.Partial("_Register")
-        <p>Already signed up? <a id="showLogin">Log in</a></p>
-    </div>
-}
+        </div>
+    
+   
 </div>
 
-@if (@User.Identity.IsAuthenticated)
+@if (true)
 {
     @section scripts {
         @Scripts.Render("~/bundles/knockout")

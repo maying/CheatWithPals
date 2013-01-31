@@ -6,8 +6,10 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.OData.Query;
 
 namespace CheatWithPals.Controllers
 {
@@ -15,11 +17,75 @@ namespace CheatWithPals.Controllers
     {
         private EnglishWordsEntities db = new EnglishWordsEntities();
 
-        // GET api/Word
-        public IEnumerable<Word> GetWords()
+        // GET api/Words
+        public IQueryable<Word> GetWords(ODataQueryOptions options, string boardLetter, string letterOnHand)
         {
-            return db.Words.AsEnumerable();
+
+            var appliedQuery = ((IQueryable<Word>)options.ApplyTo(db.Words)).ToList(); // apply the query and call toList so that I can do more operation (i.e. assign Point to Word)
+
+            var regex = new Regex(string.Format(@"[{0}]", letterOnHand));
+            var rtnval = (from word in appliedQuery
+                          where Valid(boardLetter, letterOnHand, word.Word1)
+                          select new Word
+                          {
+                              Word1 = word.Word1,
+                              Point = CalculatePoint(word.Word1)
+                          }).OrderByDescending(word => word.Point).AsQueryable();
+            return rtnval;
         }
+
+
+        bool Valid(string boardLetter, string letterOnHand, string possibleWord)
+        {
+            var regex = new Regex(string.Format(@"[{0}]", boardLetter));
+            var result = regex.Replace(possibleWord, string.Empty);
+
+            regex = new Regex(string.Format(@"[{0}]", letterOnHand));
+            var result2 = regex.Replace(result, string.Empty);
+            return result2.Length == 0;
+        }
+
+        int CalculatePoint(string word)
+        {
+            int point = 0;
+            foreach (char c in word)
+            {
+                point += points[c];
+            }
+
+            return point;
+        }
+
+        Dictionary<char, int> points = new Dictionary<char, int>()
+        {
+            { 'a', 1 },
+            { 'b', 3 },
+            { 'c', 1 },
+            { 'd', 2 },
+            { 'e', 1 },
+            { 'f', 4 },
+            { 'g', 2 },
+            { 'h', 4 },
+            { 'i', 1 },
+            { 'j', 8 },
+            { 'k', 5 },
+            { 'l', 1 },
+            { 'm', 3 },
+            { 'n', 1 },
+            { 'o', 1 },
+            { 'p', 3 },
+            { 'q', 10 },
+            { 'r', 1 },
+            { 's', 1 },
+            { 't', 1 },
+            { 'u', 1 },
+            { 'v', 4 },
+            { 'w', 4 },
+            { 'x', 8 },
+            { 'y', 4 },
+            { 'z', 10 },
+        };
+
 
         // GET api/Word/5
         public Word GetWord(int id)
