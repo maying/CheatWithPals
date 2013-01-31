@@ -1,0 +1,482 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Web.Http.Tracing</name>
+    </assembly>
+    <members>
+        <member name="T:System.Web.Http.Error">
+            <summary>
+            Utility class for creating and unwrapping <see cref="T:System.Exception"/> instances.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.Error.Format(System.String,System.Object[])">
+            <summary>
+            Formats the specified resource string using <see cref="M:CultureInfo.CurrentCulture"/>.
+            </summary>
+            <param name="format">A composite format string.</param>
+            <param name="args">An object array that contains zero or more objects to format.</param>
+            <returns>The formatted string.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.Argument(System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.ArgumentException"/> with the provided properties.
+            </summary>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.Argument(System.String,System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.ArgumentException"/> with the provided properties.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentUriNotHttpOrHttpsScheme(System.String,System.Uri)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentException"/> with a message saying that the argument must be an "http" or "https" URI.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="actualValue">The value of the argument that causes this exception.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentUriNotAbsolute(System.String,System.Uri)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentException"/> with a message saying that the argument must be an absolute URI.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="actualValue">The value of the argument that causes this exception.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentUriHasQueryOrFragment(System.String,System.Uri)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentException"/> with a message saying that the argument must be an absolute URI 
+            without a query or fragment identifier and then logs it with <see cref="F:TraceLevel.Error"/>.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="actualValue">The value of the argument that causes this exception.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.PropertyNull">
+            <summary>
+            Creates an <see cref="T:System.ArgumentNullException"/> with the provided properties.
+            </summary>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentNull(System.String)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentNullException"/> with the provided properties.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentNull(System.String,System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.ArgumentNullException"/> with the provided properties.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentNullOrEmpty(System.String)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentException"/> with a default message.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentOutOfRange(System.String,System.Object,System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.ArgumentOutOfRangeException"/> with the provided properties.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="actualValue">The value of the argument that causes this exception.</param>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentMustBeGreaterThanOrEqualTo(System.String,System.Object,System.Object)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentOutOfRangeException"/> with a message saying that the argument must be greater than or equal to <paramref name="minValue"/>.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="actualValue">The value of the argument that causes this exception.</param>
+            <param name="minValue">The minimum size of the argument.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ArgumentMustBeLessThanOrEqualTo(System.String,System.Object,System.Object)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentOutOfRangeException"/> with a message saying that the argument must be less than or equal to <paramref name="maxValue"/>.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="actualValue">The value of the argument that causes this exception.</param>
+            <param name="maxValue">The maximum size of the argument.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.KeyNotFound">
+            <summary>
+            Creates an <see cref="T:System.Collections.Generic.KeyNotFoundException"/> with a message saying that the key was not found.
+            </summary>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.KeyNotFound(System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.Collections.Generic.KeyNotFoundException"/> with a message saying that the key was not found.
+            </summary>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.ObjectDisposed(System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.ObjectDisposedException"/> initialized according to guidelines.
+            </summary>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.OperationCanceled">
+            <summary>
+            Creates an <see cref="T:System.OperationCanceledException"/> initialized with the provided parameters.
+            </summary>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.OperationCanceled(System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.OperationCanceledException"/> initialized with the provided parameters.
+            </summary>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.InvalidEnumArgument(System.String,System.Int32,System.Type)">
+            <summary>
+            Creates an <see cref="T:System.ArgumentException"/> for an invalid enum argument.
+            </summary>
+            <param name="parameterName">The name of the parameter that caused the current exception.</param>
+            <param name="invalidValue">The value of the argument that failed.</param>
+            <param name="enumClass">A <see cref="T:System.Type"/> that represents the enumeration class with the valid values.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.InvalidOperation(System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.InvalidOperationException"/>.
+            </summary>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.InvalidOperation(System.Exception,System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.InvalidOperationException"/>.
+            </summary>
+            <param name="innerException">Inner exception</param>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.Error.NotSupported(System.String,System.Object[])">
+            <summary>
+            Creates an <see cref="T:System.NotSupportedException"/>.
+            </summary>
+            <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
+            <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+            <returns>The logged <see cref="T:System.Exception"/>.</returns>
+        </member>
+        <member name="T:System.Web.Http.HttpConfigurationTracingExtensions">
+            <summary>
+            This static class contains helper methods related to the registration
+            of <see cref="T:System.Web.Http.Tracing.ITraceWriter"/> instances.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.HttpConfigurationTracingExtensions.EnableSystemDiagnosticsTracing(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Creates and registers an <see cref="T:System.Web.Http.Tracing.ITraceWriter"/> implementation to use
+            for this application.
+            </summary>
+            <param name="configuration">The <see cref="T:System.Web.Http.HttpConfiguration"/> for which
+            to register the created trace writer.</param>
+            <remarks>The returned SystemDiagnosticsTraceWriter may be further configured to change it's default settings.</remarks>
+            <returns>The <see cref="T:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter"/> which was created and registered.</returns>
+        </member>
+        <member name="T:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter">
+            <summary>
+            Implementation of <see cref="T:System.Web.Http.Tracing.ITraceWriter"/> that traces to <see cref="T:System.Diagnostics.Trace"/>
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.Trace(System.Net.Http.HttpRequestMessage,System.String,System.Web.Http.Tracing.TraceLevel,System.Action{System.Web.Http.Tracing.TraceRecord})">
+            <summary>
+            Writes a trace to <see cref="T:System.Diagnostics.Trace"/> if the
+            <paramref name="level"/> is greater than or equal <see cref="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.MinimumLevel"/>.
+            </summary>
+            <param name="request">The <see cref="T:System.Net.Http.HttpRequestMessage"/> associated with this trace. 
+            It may be <c>null</c> but the resulting trace will contain no correlation ID.</param>
+            <param name="category">The category for the trace. This can be any user-defined
+            value. It is not interpreted by this implementation but is written to the trace.</param>
+            <param name="level">The <see cref="T:System.Web.Http.Tracing.TraceLevel"/> of this trace. If it is less than
+            <see cref="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.MinimumLevel"/>, this trace request will be ignored.</param>
+            <param name="traceAction">The user callback to invoke to fill in a <see cref="T:System.Web.Http.Tracing.TraceRecord"/>
+            with additional information to add to the trace.</param>
+        </member>
+        <member name="M:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.Format(System.Web.Http.Tracing.TraceRecord)">
+            <summary>
+            Formats the contents of the given <see cref="T:System.Web.Http.Tracing.TraceRecord"/> into
+            a single string containing comma-separated name-value pairs
+            for each <see cref="T:System.Web.Http.Tracing.TraceRecord"/> property.
+            </summary>
+            <param name="traceRecord">The <see cref="T:System.Web.Http.Tracing.TraceRecord"/> from which 
+            to produce the result.</param>
+            <returns>A string containing comma-separated name-value pairs.</returns>
+        </member>
+        <member name="M:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.FormatRequestEnvelope(System.Web.Http.Tracing.TraceRecord)">
+            <summary>
+            Formats the given <see cref="T:System.Web.Http.Tracing.TraceRecord"/> into a string describing
+            either the initial receipt of the incoming request or the final send
+            of the response, depending on <see cref="T:System.Web.Http.Tracing.TraceKind"/>.
+            </summary>
+            <param name="traceRecord">The <see cref="T:System.Web.Http.Tracing.TraceRecord"/> from which to 
+            produce the result.</param>
+            <returns>A string containing comma-separated name-value pairs.</returns>
+        </member>
+        <member name="M:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.TranslateHttpResponseException(System.Web.Http.Tracing.TraceRecord)">
+            <summary>
+            Examines the given <see cref="T:System.Web.Http.Tracing.TraceRecord"/> to determine whether it
+            contains an <see cref="T:System.Web.Http.HttpResponseException"/> and if so, modifies
+            the <see cref="T:System.Web.Http.Tracing.TraceRecord"/> to capture more detailed information.
+            </summary>
+            <param name="traceRecord">The <see cref="T:System.Web.Http.Tracing.TraceRecord"/> to examine and modify.</param>
+        </member>
+        <member name="M:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.FormatDateTime(System.DateTime)">
+            <summary>
+            Formats a <see cref="T:System.DateTime"/> for the trace.
+            </summary>
+            <remarks>
+            The default implementation uses the ISO 8601 convention
+            for round-trippable dates so they can be parsed.
+            </remarks>
+            <param name="dateTime">The <see cref="T:System.DateTime"/></param>
+            <returns>The <see cref="T:System.DateTime"/> formatted as a string</returns>
+        </member>
+        <member name="M:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.AddExceptions(System.Web.Http.HttpError,System.Collections.Generic.List{System.String})">
+            <summary>
+            Unpacks any exceptions in the given <see cref="T:System.Web.Http.HttpError"/> and adds
+            them into a collection of name-value pairs that can be composed into a single string.
+            </summary>
+            <remarks>
+            This helper also iterates over all inner exceptions and unpacks them too.
+            </remarks>
+            <param name="httpError">The <see cref="T:System.Web.Http.HttpError"/> to unpack.</param>
+            <param name="messages">A collection of messages to which the new information should be added.</param>
+        </member>
+        <member name="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.MinimumLevel">
+            <summary>
+            Gets or sets the minimum trace level.
+            </summary>
+            <value>
+            Any <see cref="T:System.Web.Http.Tracing.TraceLevel"/> below this
+            level will be ignored. The default for this property
+            is <see cref="F:System.Web.Http.Tracing.TraceLevel.Info"/>.
+            </value>
+        </member>
+        <member name="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.IsVerbose">
+            <summary>
+            Gets or sets a value indicating whether the formatted message
+            should be the verbose format, meaning it displays all fields
+            of the <see cref="T:System.Web.Http.Tracing.TraceRecord"/>.
+            </summary>
+            <value><c>true</c> means all <see cref="T:System.Web.Http.Tracing.TraceRecord"/> fields
+            will be traced, <c>false</c> means only minimal information
+            will be traced. The default value is <c>false</c>.</value>
+        </member>
+        <member name="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.TraceSource">
+            <summary>
+            Gets or sets the <see cref="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.TraceSource"/> to which the
+            traces will be sent.
+            </summary>
+            <value>
+            This property allows a custom <see cref="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.TraceSource"/> 
+            to be used when writing the traces.
+            This allows an application to configure and use its
+            own <see cref="P:System.Web.Http.Tracing.SystemDiagnosticsTraceWriter.TraceSource"/> other than the default
+            <see cref="T:System.Diagnostics.Trace"/>.
+            If the value is <c>null</c>, this trace writer will
+            send traces to <see cref="T:System.Diagnostics.Trace"/>.
+            </value>
+        </member>
+        <member name="T:System.Web.Http.Tracing.Properties.SRResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.CategoryFormat">
+            <summary>
+              Looks up a localized string similar to Category=&apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.ExceptionFormat">
+            <summary>
+              Looks up a localized string similar to Exception={0}.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpErrorExceptionMessageFormat">
+            <summary>
+              Looks up a localized string similar to ExceptionMessage{0}=&apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpErrorExceptionTypeFormat">
+            <summary>
+              Looks up a localized string similar to ExceptionType{0}=&apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpErrorMessageDetailFormat">
+            <summary>
+              Looks up a localized string similar to MessageDetail=&apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpErrorModelStateErrorFormat">
+            <summary>
+              Looks up a localized string similar to ModelStateError=[{0}].
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpErrorModelStatePairFormat">
+            <summary>
+              Looks up a localized string similar to {0}=[{1}].
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpErrorStackTraceFormat">
+            <summary>
+              Looks up a localized string similar to StackTrace{0}={1}.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpErrorUserMessageFormat">
+            <summary>
+              Looks up a localized string similar to UserMessage=&apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpMethodFormat">
+            <summary>
+              Looks up a localized string similar to Method={0}.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.HttpStatusFormat">
+            <summary>
+              Looks up a localized string similar to Status={0} ({1}).
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.IdFormat">
+            <summary>
+              Looks up a localized string similar to Id={0}.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.MessageFormat">
+            <summary>
+              Looks up a localized string similar to Message=&apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.OperationFormat">
+            <summary>
+              Looks up a localized string similar to Operation={0}.{1}.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.ShortRequestFormat">
+            <summary>
+              Looks up a localized string similar to Request.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.ShortResponseFormat">
+            <summary>
+              Looks up a localized string similar to Response.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.TimeLevelKindFormat">
+            <summary>
+              Looks up a localized string similar to [{0}] Level={1}, Kind={2}.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.TimeRequestFormat">
+            <summary>
+              Looks up a localized string similar to [{0}] Request received.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.TimeResponseFormat">
+            <summary>
+              Looks up a localized string similar to [{0}] Sending response.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.TraceLevelOutOfRange">
+            <summary>
+              Looks up a localized string similar to The TraceLevel property must be a value between TraceLevel.Off and TraceLevel.Fatal, inclusive..
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Tracing.Properties.SRResources.UrlFormat">
+            <summary>
+              Looks up a localized string similar to Url={0}.
+            </summary>
+        </member>
+        <member name="T:System.Web.Http.Properties.CommonWebApiResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.ArgumentInvalidAbsoluteUri">
+            <summary>
+              Looks up a localized string similar to Relative URI values are not supported: &apos;{0}&apos;. The URI must be absolute..
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.ArgumentInvalidHttpUriScheme">
+            <summary>
+              Looks up a localized string similar to Unsupported URI scheme: &apos;{0}&apos;. The URI scheme must be either &apos;{1}&apos; or &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.ArgumentMustBeGreaterThanOrEqualTo">
+            <summary>
+              Looks up a localized string similar to Value must be greater than or equal to {0}..
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.ArgumentMustBeLessThanOrEqualTo">
+            <summary>
+              Looks up a localized string similar to Value must be less than or equal to {0}..
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.ArgumentNullOrEmpty">
+            <summary>
+              Looks up a localized string similar to The argument &apos;{0}&apos; is null or empty..
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.ArgumentUriHasQueryOrFragment">
+            <summary>
+              Looks up a localized string similar to URI must not contain a query component or a fragment identifier..
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.Properties.CommonWebApiResources.InvalidEnumArgument">
+            <summary>
+              Looks up a localized string similar to The value of argument &apos;{0}&apos; ({1}) is invalid for Enum type &apos;{2}&apos;..
+            </summary>
+        </member>
+    </members>
+</doc>
