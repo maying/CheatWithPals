@@ -43,7 +43,11 @@ window.todoApp.datacontext = (function () {
 
             return RunOneCluster(board, boardLetters[0], wildcard, dataEntityName, anyOneLetter);
         }
+        else if (boardLetters.length == 2) {
+            return RunTwoCluster(board, boardLetters, wildcard, dataEntityName, anyOneLetter);
+        }
         else {
+            // We do not support the case that we have more than two clusters.
             return query;
         }
 
@@ -62,11 +66,82 @@ window.todoApp.datacontext = (function () {
         return i == str1.length ? -1 : i;
     }
 
+    function exclusiveIndexOf(str1, str2) {
+        str1 = str1.toLowerCase();
+        str2 = str2.toLowerCase();
+        var i = 0;
+        for (i = 0; i < str1.length && startsWith(str1.substring(i), str2) ; ++i) {
+        }
+        return i == str1.length ? -1 : i;
+    }
+
+    function RunTwoCluster(board, boardLetters, wildcard, dataEntityName, anyOneLetter) {
+        // Limited Max Space
+        var query = "";
+        var maxLength = board.length;
+        var firstLetter = boardLetters[0];
+        var secondLetter = boardLetters[1];
+        if (board.indexOf(wildcard) === -1) {
+            query = "$filter=length({0}) le {1} and indexof(Word1,'{2}') eq {3} and indexof(substring({4},indexof({5},'{6}'),length({7}) sub indexof({8},'{9}')),'{10}') eq {11} and indexof(substring({12},indexof({13},'{14}'),length({15}) sub indexof({16},'{17}')),'{18}') add {19} add 1 le length(substring(Word1,indexof(Word1,'{20}'),length(Word1) sub indexof(Word1,'{21}')))".format
+            (
+                dataEntityName, 
+                maxLength, 
+                firstLetter, 
+                board.indexOf(firstLetter),
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter, 
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter, 
+                secondLetter, 
+                board.indexOf(secondLetter) - board.indexOf(firstLetter),
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter, 
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter,
+                secondLetter,
+                exclusiveIndexOf(board.split("").reverse().join(""), anyOneLetter), 
+                firstLetter,
+                firstLetter
+            );
+        }
+        else {
+            query = "$filter=indexof(Word1,'{0}') eq {1} and indexof(substring({2},indexof({3},'{4}'),length({5}) sub indexof({6},'{7}')),'{8}') eq {9} and indexof(substring({10},indexof({11},'{12}'),length({13}) sub indexof({14},'{15}')),'{16}') add {17} add 1 le length(substring(Word1,indexof(Word1,'{18}'),length(Word1) sub indexof(Word1,'{19}')))".format
+            (
+                firstLetter, 
+                board.indexOf(firstLetter),
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter, 
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter, 
+                secondLetter, 
+                board.indexOf(secondLetter) - board.indexOf(firstLetter),
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter, 
+                dataEntityName, 
+                dataEntityName, 
+                firstLetter,
+                secondLetter,
+                exclusiveIndexOf(board.split("").reverse().join(""), anyOneLetter), 
+                firstLetter,
+                firstLetter
+            );
+        }
+        return query;
+    }
+
     function RunOneCluster(board, boardLetter, wildcard, dataEntityName, anyOneLetter) {
         // Limited Max Space
         var query = "";
+        var maxLength = board.length;
+
         if (board.indexOf(wildcard) === -1) {
-            var maxLength = board.length;
             if (startsWith(board, anyOneLetter) && board.endsWith(anyOneLetter)) {
                 // Use Case #1 anyOneLetter at the beginner AND end
                 // i.e. _ _ A _ _ _ _                    
