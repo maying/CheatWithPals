@@ -17,6 +17,7 @@ window.todoApp.datacontext = (function () {
 
     return datacontext;
 
+
     function queryBuilder(board) {
         var dataEntityName = "Word1";
         var query = "";
@@ -24,6 +25,18 @@ window.todoApp.datacontext = (function () {
         var anyOneLetter = " ";
 
 
+        //first, checks if it isn't implemented yet
+        if (!String.prototype.format) {
+            String.prototype.format = function () {
+                var args = arguments;
+                return this.replace(/{(\d+)}/g, function (match, number) {
+                    return typeof args[number] != 'undefined'
+                  ? args[number]
+                  : match
+                    ;
+                });
+            };
+        }
 
         var boardLetters = board.trim().split(" ");
 
@@ -37,32 +50,105 @@ window.todoApp.datacontext = (function () {
 
     }
 
+    function startsWith(str1, str2) {
+        return str1.indexOf(str2) == 0;
+    }
+
+    function exclusiveIndexOf(str1, str2)
+    {
+        str1 = str1.toLowerCase();
+        str2 = str2.toLowerCase();
+        var i=0;
+        for(i = 0; i<str1.length && startsWith(str1.substring(i), str2) ;++i)
+        {
+        }
+        return i == str1.length ? -1 : i;
+    }
+
     function RunOneCluster(board, boardLetter, wildcard, dataEntityName, anyOneLetter) {
         // Limited Max Space
         var query = "";
         if (board.indexOf(wildcard) === -1) {
             var maxLength = board.length;
-
-            if (board.indexOf(anyOneLetter) === 0) {
-
-                if (board.endsWith(anyOneLetter)) {
-                    // anyOneLetter at the beginner AND end
-                    // i.e. _ _ A _ _ _ _                    
-
-
-                    query = "$filter=length(" + dataEntityName + ") le " + maxLength +
-                    " and indexof(" + dataEntityName + ",'" + boardLetter + "') le " + board.indexOf(boardLetter) +
-                    " and indexof(" + dataEntityName + ",'" + boardLetter + "') gt 0";
-
-                } else {
-                    // i.e. _ _ _ A
-                }
+            if (startsWith(board, anyOneLetter) && board.endsWith(anyOneLetter)) {
+                // Use Case #1 anyOneLetter at the beginner AND end
+                // i.e. _ _ A _ _ _ _                    
+                query = "$filter=length({0}) le {1} and indexof({2},'{3}') le {4} and indexof({5},'{6}') gt 0".format
+                    (
+                    dataEntityName,
+                    maxLength,
+                    dataEntityName,
+                    boardLetter,
+                    board.indexOf(boardLetter),
+                    dataEntityName,
+                    boardLetter
+                    );
             }
+            else if (startsWith(board, anyOneLetter) && !board.endsWith(anyOneLetter)) {
+                // Use case #2 
+                // i.e. _ _ _ A
+                query = "$filter=length({0}) le {1} and endswith({2}, '{3}')".format
+                    (
+                    dataEntityName,
+                    maxLength,
+                    dataEntityName,
+                    boardLetter
+                    );
 
-        } else {
-
+            }
+            else if (!startsWith(board, anyOneLetter) && board.endsWith(anyOneLetter)) {
+                //  Use case #3 Start 
+                // A _ _ _ _ _ (6)
+                // A B _ _ _ _ (6)
+                query = "$filter=length({0}) le {1} and startswith({2}, '{3}')".format
+                (
+                dataEntityName,
+                maxLength,
+                dataEntityName,
+                boardLetter
+                );
+            }
         }
+        else {
+            if (startsWith(board, wildcard) && board.endsWith(anyOneLetter)) {
+                /* Use case #4 
+                a) Middle - Unlimited left
+                * A _ _ 
+                * A B _ 
+                */
+                // We do not support the case where the wildcard is in the middle of the board. 
+            }
+            else if(startsWith(board,anyOneLetter) && board.endsWith(wildcard)) {
+                /* Use case #5
+                b) Middle - unlimited right
+                _ _ A *
+                _ _ B A *
+                */
+                query = "$filter=indexof({0}, '{1}') eq {2}".format
+                    (
+                    dataEntityName,
+                    boardLetter.replace(/\*/g, ""),
+                    exclusiveIndexOf(board, anyOneLetter)
+                    );
+            }
+            else if(startsWith(board,wildcard) && board.endsWith(wildcard))
+            {
+                /* Use case #6
+                c) Middle - unlimited both directions
+                * A *
+                * A B *
+                */
 
+                query = "$filter=substringof('{0}', {1}) eq true".format
+                    (
+                    boardLetter.replace(/\*/g, ""),
+                    dataEntityName
+                    );
+            }
+            else {
+                // We do not support the case where the wildcard is in the middle of the board. 
+            }
+        }
         return query;
     }
 
