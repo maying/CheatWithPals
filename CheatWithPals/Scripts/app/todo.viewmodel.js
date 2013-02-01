@@ -30,7 +30,7 @@
         },
         slotValues = [" ", "*", "{DL}", "{DW}", "{TL}", "{TW}", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
         slots = ko.observableArray([{ value: slotValues }]),
-        wordList = ko.observableArray([{ word1: "abc", point: 0 }]),
+        wordList = ko.observableArray(),
         doSomething = function (formElement) {
             var length = formElement.elements.length;
             var board = "";
@@ -47,6 +47,10 @@
         addSlot = function () {
             
             slots.push({ value: slotValues });
+        },
+        getDef = function () {
+
+            slots.push({ value: slotValues });
         };
 
     //datacontext.getTodoLists(todoLists, error); // load todoLists
@@ -59,7 +63,8 @@
         slots: slots,
         addSlot: addSlot,
         doSomething: doSomething,
-        wordList: wordList
+        wordList: wordList,
+        getDef:getDef
     };
 
 })(ko, todoApp.datacontext);

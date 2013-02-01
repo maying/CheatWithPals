@@ -1,0 +1,13 @@
+Fri Feb 01 2013 11:45:16 GMT-0800 (Pacific Standard Time):
+[Error: Invalid server name]
+Error: Invalid server name
+    at ___ (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\lib\commands\sql._js:459:22)
+    at ___ (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\node_modules\streamline\lib\callbacks\runtime.js:85:13)
+    at SqlManagementService.listServers.performRequest.finalCallback (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\node_modules\azure\lib\services\serviceManagement\sqlmanagementservice.js:88:7)
+    at ServiceClient._initDefaultFilter.filter (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\node_modules\azure\lib\services\core\serviceclient.js:601:11)
+    at SqlManagementService.listServers (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\node_modules\azure\lib\services\serviceManagement\sqlmanagementservice.js:91:5)
+    at Request.ServiceClient._performRequest.self._buildRequestOptions.processResponseCallback [as _callback] (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\node_modules\azure\lib\services\core\serviceclient.js:228:11)
+    at Request.init.self.callback (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\node_modules\request\main.js:122:22)
+    at Request.EventEmitter.emit (events.js:99:17)
+    at Request.<anonymous> (C:\Users\maying\AppData\Roaming\npm\node_modules\azure-cli\node_modules\request\main.js:661:16)
+    at Request.EventEmitter.emit (events.js:126:20)

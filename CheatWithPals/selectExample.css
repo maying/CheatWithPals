@@ -7,15 +7,17 @@ select {
     padding-left: 25px;
     width: 100px;
     height: 100px;
+    font-family:sans-serif;
     font-size: 50px;
     text-align: center;
     overflow: hidden;
-    box-shadow: #DD7926 3px 3px inset;
+    box-shadow: #DD7926 3px 3px;
     -moz-border-radius: 30px;
     -webkit-appearance: none;
     border-radius: 20px;
     vertical-align: top;
 }
+
 
 select:hover { background-color: #F7CF75; }
 

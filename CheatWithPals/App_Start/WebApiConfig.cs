@@ -24,6 +24,7 @@ namespace CheatWithPals
 
             // Use camel case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //config.Formatters.XmlFormatter.UseXmlSerializer = true;
         }
     }
 }

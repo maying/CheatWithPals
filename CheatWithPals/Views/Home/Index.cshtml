@@ -1,16 +1,16 @@
 ﻿@{
-    ViewBag.Title = "My Todo List";
+    ViewBag.Title = "Add logo";
 }
 
 <header>
-    <h1>@ViewBag.Title</h1>
+    <img src="~/Images/logo.png" style="margin-left: auto;margin-right:auto"/>
     <link href="~/selectExample.css" rel="stylesheet" />
     <script>
 
         String.prototype.endsWith = function (suffix) {
             return this.indexOf(suffix, this.length - suffix.length) !== -1;
         }
-</script>
+    </script>
     <script src="~/Scripts/jquery-1.8.2.min.js"></script>
     <script type="text/javascript">
 
@@ -21,44 +21,85 @@
             if (dropdown.val().length > 1) {
 
                 dropdown.css("font-size", "30px");
-                dropdown.css("padding-left", "10px");
+                dropdown.css("padding-left", "8px");
+                dropdown.css("box-shadow", "grey 3px 3px");
+                dropdown.css("color", "white");
+                dropdown.css("border-color", "lightgrey");
+
+                if (dropdown.val() === "{TL}") {
+                    dropdown.css("background", "#7ca74e");
+                } else if (dropdown.val() === "{TW}") {
+                    dropdown.css("background", "#e68b22");
+                } else if (dropdown.val() === "{DW}") {
+                    dropdown.css("background", "#b04f3c");
+                } else if (dropdown.val() === "{DL}") {
+                    dropdown.css("background", "#0081ce");
+                }
+                
             } else {
 
                 dropdown.css("font-size", "50px");
                 dropdown.css("padding-left", "25px");
+                dropdown.css("background", "#F3BF40");
+                dropdown.css("color", "black");
+                dropdown.css("border-color", "#EBB02C");
+                dropdown.css("box-shadow", "#DD7926 3px 3px");
             }
         }
     </script>
 </header>
 
-<div id="main-content">
-    
-        <p class="error" data-bind="text: error"></p>
-        
-   
-        <button data-bind="click: addSlot">Add Slot</button>
-    
-        <form data-bind="submit: doSomething">
-            <div data-bind="foreach: slots" style="height:100px">
-                
-                    <select  data-bind="options: value, uniqueName: true" class="mainselection" onchange="javascript:someMethod(this);"></select>
-                
-            </div>
+<div id="main-content" style="background-color:#d6d7dc; width:90%;margin-left: auto; margin-right: auto" >
 
-            <input type="text" />
-            <br />
-            <button data-bind="">Let's Cheat!</button>
-        </form>
-        <div style="background-color: yellow" id="diff">
-            <ul data-bind="foreach: wordList">
-                <li>
-                    <span data-bind="text: word1"></span>
-                    <span data-bind="text: point"></span> pts
-                </li>
-            </ul>
+    <br />
+    <p class="error" data-bind="text: error"></p>
+    <button alue="Refresh" onClick="history.go()">Reset</button>
+
+    <button data-bind="click: addSlot">Add Slot</button>
+    <p></p>
+    <form data-bind="submit: doSomething">
+        <div data-bind="foreach: slots" style="height: 100px">
+
+            <select data-bind="options: value, uniqueName: true" class="mainselection" onchange="javascript:someMethod(this);"></select>
+
         </div>
-    
-   
+        <br />
+        
+
+        <input type="text" style="width:70%"/>
+        <br />
+        <button data-bind="">Let's Cheat!</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr >
+                <th>Points</th>
+                <th>Word</th>
+                <th>Audio</th>
+                <th>Definition</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: wordList">
+            <tr>
+                <td data-bind="text: point"></td>
+                <td data-bind="text: word1"></td>
+                <td>
+                    <div data-bind="if: audioLink">
+                    <audio controls style="width:45px" >
+                        <source data-bind="attr:{src: audioLink}"  type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                        </div>
+                </td>
+                <td data-bind="text: definition" style="text-align:left"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+
+
+
 </div>
 
 @if (true)
