@@ -196,11 +196,13 @@ window.todoApp.datacontext = (function () {
                 _ _ A *
                 _ _ B A *
                 */
-                query = "$filter=indexof({0}, '{1}') eq {2}".format
+                query = "$filter=indexof({0}, '{1}') eq {2} and indexof({3}, '{4}') gt 0".format
                     (
                     dataEntityName,
                     boardLetter.replace(/\*/g, ""),
-                    exclusiveIndexOf(board, anyOneLetter)
+                    exclusiveIndexOf(board, anyOneLetter),
+                    dataEntityName,
+                    boardLetter.replace(/\*/g, "")
                     );
             }
             else if (startsWith(board, wildcard) && board.endsWith(wildcard)) {
@@ -254,10 +256,11 @@ window.todoApp.datacontext = (function () {
         var boardLetter = extractBoardLetter(board);
         var url = wordUrl() + '?boardLetter=' + boardLetter + '&letterOnHand=' + hand + "&" + query;
 
+
         if (matchArr) {
             url += bonusQuery;
         }
-
+        
         return ajaxRequest("get", url)
             .done(getSucceeded)
             .fail(getFailed);

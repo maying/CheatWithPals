@@ -40,7 +40,10 @@ namespace CheatWithPals.Controllers
         {
 
             var appliedQuery = ((IQueryable<Word>)options.ApplyTo(db.Words)).ToList(); // apply the query and call toList so that I can do more operation (i.e. assign Point to Word)
-
+            if (appliedQuery == null || appliedQuery.Count() == 0)
+            {
+                return appliedQuery.AsQueryable();
+            }
             var regex = new Regex(string.Format(@"[{0}]", letterOnHand));
             var rtnval = (from word in appliedQuery
                           where Valid(boardLetter, letterOnHand, word.Word1)
@@ -48,9 +51,16 @@ namespace CheatWithPals.Controllers
                           {
                               Word1 = word.Word1,
                               Point = CalculatePoint(word.Word1, bonuses),
-                              Def = GetDef(word),
-                          }).OrderByDescending(word => word.Point).Take(10).AsQueryable();
-            return rtnval;
+                          }).OrderByDescending(word => word.Point).Take(10);
+
+            rtnval = from word in rtnval
+                     select new Word
+                     {
+                         Word1 = word.Word1,
+                         Point = word.Point,
+                         Def = GetDef(word)
+                     };
+            return rtnval.AsQueryable();
         }
 
         
@@ -93,14 +103,6 @@ namespace CheatWithPals.Controllers
 
         bool Valid(string boardLetter, string letterOnHand, string possibleWord)
         {
-            // use regex match:  
-//            Breakdown of regexp:
-//^ Anchor at start of string
-//[^\$]* Zero or more characters that are not $
-//\$ Match a dollar sign
-//[^\$]* Zero or more characters that are not $
-//$ Anchor at end of string
-
             var result = possibleWord;
             foreach (char c in boardLetter.ToLower() + letterOnHand.ToLower())
             {
@@ -113,6 +115,8 @@ namespace CheatWithPals.Controllers
 
         int CalculatePoint(string word, Bonus[] bonuses)
         {
+       
+
             // regular point
             int point = 0;
             foreach (char c in word)
