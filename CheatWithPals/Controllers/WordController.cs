@@ -34,15 +34,25 @@ namespace CheatWithPals.Controllers
             return rtnval;
         }
 
+        string ReplaceFirst(string text, string search, string replace)
+        {
+            int pos = text.IndexOf(search);
+            if (pos < 0)
+            {
+                return text;
+            }
+            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
+        }
 
         bool Valid(string boardLetter, string letterOnHand, string possibleWord)
         {
-            var regex = new Regex(string.Format(@"[{0}]", boardLetter));
-            var result = regex.Replace(possibleWord, string.Empty);
+            var result = possibleWord;
+            foreach (char c in boardLetter.ToLower() + letterOnHand.ToLower())
+            {
+                result = ReplaceFirst(result, c.ToString(), string.Empty);
+            }
 
-            regex = new Regex(string.Format(@"[{0}]", letterOnHand));
-            var result2 = regex.Replace(result, string.Empty);
-            return result2.Length == 0;
+            return result.Length == 0;
         }
 
         int CalculatePoint(string word)

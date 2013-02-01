@@ -17,14 +17,54 @@ window.todoApp.datacontext = (function () {
 
     return datacontext;
 
-    function getWords(board, hand, wordListObservable) {
-        // todo - insert query builder lgoci
-        // var query = QueryBuilder(...);
-        var query = '';
-        var boardLetter = board; // remove all other space/bonus/wildcard
+    function queryBuilder(board) {
+        var dataEntityName = "Word1";
+        var query = "";
+        var wildcard = "*";
+        var anyOneLetter = " ";
+
         
 
-        return ajaxRequest("get", wordUrl() + '?boardLetter=' + boardLetter + '&letterOnHand=' + hand) // todo - add query to url
+        var boardLetters = board.trim();
+
+        // Limited Max Space
+        if (board.indexOf(wildcard)  === -1) {
+            var maxLength = board.length;
+            
+            if (board.indexOf(anyOneLetter) === 0) {
+                
+                if (board.endsWith(anyOneLetter)) {
+                    // anyOneLetter at the beginner AND end
+                    // i.e. _ _ A _ _ _ _                    
+                    
+                    
+                    query = "$filter=length(" + dataEntityName + ") le " + maxLength +
+                    " and indexof(" + dataEntityName + ",'" + boardLetters + "') le " + board.indexOf(boardLetters) +
+                    " and indexof(" + dataEntityName + ",'" + boardLetters + "') gt 0";
+                    
+                } else {
+                    // i.e. _ _ _ A
+                }
+            }
+
+        } else {
+
+        }
+
+        return query;
+    }
+
+    function extractBoardLetter(board) {
+        return board.replace(" ", "");
+    }
+
+    function getWords(board, hand, wordListObservable) {
+
+        var query = queryBuilder(board);
+        //var boardLetter = extractBoardLetter(board);
+        var boardLetter = "A";
+        
+        return ajaxRequest("get", wordUrl() + '?boardLetter=' + boardLetter + '&letterOnHand=' + hand + "&" + query) // todo - add query to url
             .done(getSucceeded)
             .fail(getFailed);
 

@@ -5,6 +5,12 @@
 <header>
     <h1>@ViewBag.Title</h1>
     <link href="~/selectExample.css" rel="stylesheet" />
+    <script>
+
+        String.prototype.endsWith = function (suffix) {
+            return this.indexOf(suffix, this.length - suffix.length) !== -1;
+        }
+</script>
     <script src="~/Scripts/jquery-1.8.2.min.js"></script>
     <script type="text/javascript">
 
@@ -46,7 +52,7 @@
         <div style="background-color: yellow" id="diff">
             <ul data-bind="foreach: wordList">
                 <li>
-                    <span data-bind="text: word"></span>
+                    <span data-bind="text: word1"></span>
                     <span data-bind="text: point"></span> pts
                 </li>
             </ul>

@@ -30,7 +30,7 @@
         },
         slotValues = [" ", "*", "{DL}", "{DW}", "{TL}", "{TW}", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
         slots = ko.observableArray([{ value: slotValues }]),
-        wordList = ko.observableArray([{ word: "abc", point: 0 }]),
+        wordList = ko.observableArray([{ word1: "abc", point: 0 }]),
         doSomething = function (formElement) {
             var length = formElement.elements.length;
             var board = "";
