@@ -15,7 +15,6 @@ window.todoApp.datacontext = (function () {
         getWords: getWords
     };
 
-
     return datacontext;
 
     function queryBuilder(board) {
@@ -24,25 +23,37 @@ window.todoApp.datacontext = (function () {
         var wildcard = "*";
         var anyOneLetter = " ";
 
-        
 
-        var boardLetters = board.trim();
 
+        var boardLetters = board.trim().split(" ");
+
+        if (boardLetters.length == 1) {
+
+            return RunOneCluster(board, boardLetters[0], wildcard, dataEntityName, anyOneLetter);
+        }
+        else {
+            return query;
+        }
+
+    }
+
+    function RunOneCluster(board, boardLetter, wildcard, dataEntityName, anyOneLetter) {
         // Limited Max Space
-        if (board.indexOf(wildcard)  === -1) {
+        var query = "";
+        if (board.indexOf(wildcard) === -1) {
             var maxLength = board.length;
-            
+
             if (board.indexOf(anyOneLetter) === 0) {
-                
+
                 if (board.endsWith(anyOneLetter)) {
                     // anyOneLetter at the beginner AND end
                     // i.e. _ _ A _ _ _ _                    
-                    
-                    
+
+
                     query = "$filter=length(" + dataEntityName + ") le " + maxLength +
-                    " and indexof(" + dataEntityName + ",'" + boardLetters + "') le " + board.indexOf(boardLetters) +
-                    " and indexof(" + dataEntityName + ",'" + boardLetters + "') gt 0";
-                    
+                    " and indexof(" + dataEntityName + ",'" + boardLetter + "') le " + board.indexOf(boardLetter) +
+                    " and indexof(" + dataEntityName + ",'" + boardLetter + "') gt 0";
+
                 } else {
                     // i.e. _ _ _ A
                 }
@@ -64,7 +75,7 @@ window.todoApp.datacontext = (function () {
         var query = queryBuilder(board);
         //var boardLetter = extractBoardLetter(board);
         var boardLetter = "A";
-        
+
         return ajaxRequest("get", wordUrl() + '?boardLetter=' + boardLetter + '&letterOnHand=' + hand + "&" + query) // todo - add query to url
             .done(getSucceeded)
             .fail(getFailed);
