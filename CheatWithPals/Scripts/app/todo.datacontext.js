@@ -15,6 +15,7 @@ window.todoApp.datacontext = (function () {
         getWords: getWords
     };
 
+
     return datacontext;
 
     function queryBuilder(board) {
